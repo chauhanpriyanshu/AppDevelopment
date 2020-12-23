@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { ImageBackground, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { ImageBackground, FlatList, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity } from "react-native";
+import { BottomNavigation, Text } from 'react-native-paper';
+
+const HomeRoute = () => <Text>Home</Text>;
+const CartRoute = () => <Text>Cart</Text>;
+const OptRoute = () => <Text>cart</Text>;
 
 const DATA = [
   {
@@ -20,7 +25,7 @@ const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bc",
     title: "First Item",
-    image: { uri: "https://picsum.photos/300/40" }
+    image: { uri: "https://picsum.photos/30/40" }
   },
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f64",
@@ -53,23 +58,36 @@ const DATA = [
 
 const Item = ({ item, onPress, style }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-    <ImageBackground source={item.image} style={styles.image}>
-    <Text style={styles.title}>{item.title}</Text>
-    </ImageBackground>
+      {/* <Text style={styles.title}>{item.title}</Text> */}
   </TouchableOpacity>
 );
 
 const App = () => {
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'main', title: 'Home', icon: 'home' },
+    { key: 'option', title: 'Browse', icon: 'grid'},
+    { key: 'cart', title: 'Cart', icon: 'cart' },
+  ]);
+
+  const renderScene = BottomNavigation.SceneMap({
+    main: HomeRoute,
+    option:OptRoute,
+    cart: CartRoute,
+  });
+
+
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    //const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
+    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
 
     return (
       <Item
         item={item}
         onPress={() => setSelectedId(item.id)}
-        style={{ backgroundImage: 'uri(https://picsum.photos/300/40)', backgroundSize: 'cover', }}
+        style={ styles.boxes }
       />
     );
   };
@@ -78,10 +96,16 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={DATA}
+        numColumns={2}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
       />
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
     </SafeAreaView>
   );
 };
@@ -103,6 +127,10 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center"
+  },
+  boxes:{
+    flex: 1,
+    backgroundColor: '#ff0000',
   },
 });
 
