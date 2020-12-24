@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { ImageBackground, FlatList, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity } from "react-native";
-import { BottomNavigation, Text } from 'react-native-paper';
+import { BottomNavigation, Text, Button } from 'react-native-paper';
+
+import AppNavigator from './AppNavigator'
 
 const HomeRoute = () => <Text>Home</Text>;
 const CartRoute = () => <Text>Cart</Text>;
 const OptRoute = () => <Text>cart</Text>;
+
+
 
 const DATA = [
   {
@@ -94,18 +98,20 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
+      <AppNavigator />
+      {/* <Button onPress={() => console.log('Pressed')}>Click Me</Button> */}
+      {/* <FlatList
         data={DATA}
         numColumns={2}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
-      />
-    <BottomNavigation
+      /> */}
+    {/* <BottomNavigation
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
       renderScene={renderScene}
-    />
+    /> */}
     </SafeAreaView>
   );
 };
