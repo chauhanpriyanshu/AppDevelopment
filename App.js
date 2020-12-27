@@ -1,13 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useRef, useState } from "react";
+import { Button, DrawerLayoutAndroid, Text, StyleSheet, View, SafeAreaView } from "react-native";
+import FLst from './Components/Flatlist';
+import Drwr from './Components/Drawer';
+import DrwrBtn from './Components/DrawerButton';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Drwr />
   );
 }
 
