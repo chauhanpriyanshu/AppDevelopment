@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import { Button, DrawerLayoutAndroid, StyleSheet, View, SafeAreaView } from "react-native";
+import { Button, DrawerLayoutAndroid, Text, StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 import FLst from './Flatlist';
-import { BottomNavigation, Text } from 'react-native-paper';
+import BottomNav from './BottomNav';
+
 
 
 const Drwr = () => {
@@ -15,54 +16,35 @@ const Drwr = () => {
     }
   };
 
-  // Bottom Nav Starts
-
-const HomeRoute = () => <Text>Home</Text>;
-
-const CartRoute = () => <Text>Cart</Text>;
-
-const OptRoute = () => <Text>cart</Text>;
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'main', title: 'Home', icon: 'home' },
-    { key: 'option', title: 'Browse', icon: 'grid'},
-    { key: 'cart', title: 'Cart', icon: 'cart' },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    main: HomeRoute,
-    option: OptRoute,
-    cart: CartRoute,
-  });
-
-  // Bottom Nav Ends
-
-
-
-
   class TopBar extends React.Component {
     render() {
       return (
         <View style={styles.container2}>
-          <Button
-          title="Open drawer"
-          onPress={() => drawer.current.openDrawer()}
-        />
+          <TouchableOpacity style={styles.btncls} onPress={() => drawer.current.openDrawer()}><Text style={styles.btntxt}>Drawer</Text></TouchableOpacity>
           <Text>TopBar</Text>
         </View>
       );
     }
   }
 
+  class BottomBar extends React.Component {
+    render() {
+      return (
+        <View style={styles.container3}>
+          {/* <Button title="One" style={{color: 'red', marginTop: 10, padding: 10}} /> */}
+          <TouchableOpacity style={styles.btncls}><Text style={styles.btntxt}>Home</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.btncls}><Text style={styles.btntxt}>Browse</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.btncls}><Text style={styles.btntxt}>Cart</Text></TouchableOpacity>
+        </View>
+      );
+    }
+  }
 
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
-      <Text style={styles.paragraph}>I'm in the Drawer!</Text>
-      <Button
-        title="Close drawer"
-        onPress={() => drawer.current.closeDrawer()}
-      />
+      <Text style={styles.paragraph}>--Drawer content would be added here-- (Note by: Priyanshu)</Text>
+      <TouchableOpacity style={styles.btncls} onPress={() => drawer.current.closeDrawer()}><Text style={styles.btntxt}>Close Drawer</Text></TouchableOpacity>
+      {/* <Button title="Close Drawer" onPress={() => drawer.current.closeDrawer()} /> */}
     </View>
   );
 
@@ -80,12 +62,9 @@ const OptRoute = () => <Text>cart</Text>;
           onPress={() => drawer.current.openDrawer()}
         /> */}
         <FLst />
-        <BottomNavigation
-        navigationState={{ index, routes }}
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-      />
+        <BottomBar />
       </SafeAreaView>
+
     </DrawerLayoutAndroid>
   );
 };
@@ -95,13 +74,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 25
+    paddingTop: 0
   },
   container2: {
     alignSelf: 'stretch',
     height: 52,
     flexDirection: 'row', // row
-    backgroundColor: 'yellow',
+    backgroundColor: '#212F3C',
+    alignItems: 'center',
+    justifyContent: 'space-between', // center, space-around
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 60,
+    paddingBottom: 25,
+  },
+  container3: {
+    alignSelf: 'stretch',
+    height: 52,
+    flexDirection: 'row', // row
+    backgroundColor: '#212F3C',
     alignItems: 'center',
     justifyContent: 'space-between', // center, space-around
     paddingLeft: 10,
@@ -114,7 +105,17 @@ const styles = StyleSheet.create({
     padding: 16,
     fontSize: 15,
     textAlign: "center"
-  }
+  },
+  btncls: {
+    width: 110,
+    height: 40,
+    backgroundColor: '#797D7F',
+    alignItems: 'center',
+    paddingTop: 10
+  },
+  btntxt:{
+    color: "#E5E7E9"
+  },
 });
 
 export default Drwr;
